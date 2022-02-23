@@ -49,12 +49,20 @@ Parameters:
   InstanceType:
     Description: OpsCenter EC2 instance type
     Type: String
-    Default: m4.xlarge
+    Default: r5.2xlarge
     AllowedValues:
       - m4.large
       - m4.xlarge
       - m4.2xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
     ConstraintDescription: Must be a valid EC2 instance type.
+  DSEConfig:
+    Type: String
+    Description: JSON String of values for cassandra.yaml
+Conditions:
+  PassConfig: !Not [ !Equals [ !Ref DSEConfig, "" ] ]
 Mappings:
   AWSAMIRegionMap:
     AMI:
