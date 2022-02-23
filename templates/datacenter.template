@@ -49,6 +49,11 @@ Parameters:
       - i3.xlarge
       - i3.2xlarge
       - i3.4xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
+      - r5.4xlarge
+      - r5.8xlarge
     ConstraintDescription: must be a valid EC2 instance type.
   VolumeSize:
     Type: Number
@@ -70,6 +75,20 @@ Parameters:
   Subnets:
     Type: CommaDelimitedList
     Description: List of subnet ids to deploy nodes into
+  Search:
+    Description: True if this is a search DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
+  Analytics:
+    Description: True if this is an analytics DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
 Mappings:
   AWSAMIRegionMap:
     AMI:
@@ -195,7 +214,7 @@ Resources:
                   - "cat .ssh/lcm.pem.pub >> .ssh/authorized_keys \n"
                   - "release=\"7.3.0\" \n"
                   - "export OPSC_VERSION='6.7.4' \n"
-                  - "wget https://github.com/DSPN/install-datastax-ubuntu/archive/$release.tar.gz\
+                  - "wget https://github.com/DSPN/install-datastax-ubuntu/archive/$release.tar.gz\ # TODO: This needs to be updated to use the modified scripts
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
                   - "cd install-datastax-ubuntu-$release/bin \n"
@@ -222,6 +241,10 @@ Resources:
                   - ' --nodeid $nodeid'
                   - ' --opscpw '''
                   - !Ref 'OpsCPassword'
+                  - ' --search '''
+                  - !Ref 'Search'
+                  - ' --analytics '''
+                  - !Ref 'Analytics'
                   - "' \n"
                   - './lcm/waitForJobs.py '
                   - ' --opsc-ip '
