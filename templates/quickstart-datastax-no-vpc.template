@@ -23,6 +23,7 @@ Metadata:
           - DSAcademyPW
           - DSEVersion
           - DBPassword
+          - DSEConfig
       - Label:
           default: OpsCenter Setup
         Parameters:
@@ -35,6 +36,8 @@ Metadata:
           - DC0Name
           - DC0Instance
           - DC0VolumeSize
+          - DC0Search
+          - DC0Analytics
       - Label:
           default: (Optional) 2nd Datacenter & Node Setup
         Parameters:
@@ -42,6 +45,8 @@ Metadata:
           - DC1Name
           - DC1Instance
           - DC1VolumeSize
+          - DC1Search
+          - DC1Analytics
       - Label:
           default: AWS Quick Start Configuration
         Parameters:
@@ -61,6 +66,8 @@ Metadata:
         default: DataStax Academy Username
       DBPassword:
         default: Database Password
+      DSEConfig:
+        default: blank
       DSAcademyPW:
         default: DataStax Academy Password
       OpsCPassword:
@@ -73,6 +80,10 @@ Metadata:
         default: 1st Data Center Instances Type
       DC0VolumeSize:
         default: 1st Data Center Volume Size
+      DC0Search:
+        default: False
+      DC0Analytics:
+        default: False
       DC1Size:
         default: 2nd Data Center Size
       DC1Name:
@@ -81,6 +92,10 @@ Metadata:
         default: 2nd Data Center Instances Type
       DC1VolumeSize:
         default: 2nd Data Center Volume Size
+      DC1Search:
+        default: False
+      DC1Analytics:
+        default: False
       ClusterName:
         default: Cluster Name
       QSS3BucketName:
@@ -133,8 +148,8 @@ Parameters:
     Description: DSE version to install.
     Default: 6.7.3
     AllowedValues:
-      - 5.1.15
-      - 6.7.3
+      - 5.1.29
+      - 6.8.20
   DSAcademyUser:
     Type: String
     Description: User name for your academy.datastax.com account.
@@ -146,6 +161,10 @@ Parameters:
     Type: String
     Description: Password for the default Cassandra user 'cassandra'.
     NoEcho: true
+  DSEConfig:
+    Type: String
+    Description: JSON String of values for cassandra.yaml
+    Default: ''  
   OpsCPassword:
     Type: String
     Description: Password for default DSE OpsCenter administrator.
@@ -184,7 +203,12 @@ Parameters:
       - i3.xlarge
       - i3.2xlarge
       - i3.4xlarge
-    Default: m4.xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
+      - r5.4xlarge
+      - r5.8xlarge
+    Default: r5.2xlarge
   DC0VolumeSize:
     Description: The EBS volume size, in GiB, for the nodes in each datacenter.
     Type: Number
@@ -192,6 +216,20 @@ Parameters:
       - 1024
       - 2048
     Default: 1024
+  DC0Search:
+    Description: True if this is a search DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
+  DC0Analytics:
+    Description: True if this is an analytics DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
   DC1Size:
     Description: >-
       The number of nodes to create in the 2nd DSE datacenter. Select 0 if you need
@@ -232,7 +270,17 @@ Parameters:
       - i3.xlarge
       - i3.2xlarge
       - i3.4xlarge
-    Default: m4.xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
+      - r5.4xlarge
+      - r5.8xlarge
+    Default: r5.2xlarge
   DC1VolumeSize:
     Description: The EBS volume size, in GiB, for the nodes in 2nd datacenter.
     Type: Number
@@ -240,6 +288,20 @@ Parameters:
       - 1024
       - 2048
     Default: 1024
+  DC1Search:
+    Description: True if this is a search DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
+  DC1Analytics:
+    Description: True if this is an analytics DC
+    Type: String
+    AllowedValues:
+      - True
+      - False
+    Default: False
   ClusterName:
     Description: The name of the DSE cluster. This is the name used by DSE OpsCenter.
     Type: String
@@ -247,11 +309,14 @@ Parameters:
   OpsCenterInstanceType:
     Description: Node EC2 instance type
     Type: String
-    Default: m4.2xlarge
+    Default: r5.2xlarge
     AllowedValues:
       - m4.large
       - m4.xlarge
       - m4.2xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
     ConstraintDescription: must be a valid EC2 instance type.
   QSS3BucketName:
     AllowedPattern: ^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$
@@ -417,6 +482,7 @@ Resources:
         Profile: !Ref 'S3ProfileOpsC'
         S3Bucket: !Ref 'S3Bucket'
         InstanceType: !Ref 'OpsCenterInstanceType'
+        DSEConfig: !Ref 'DSEConfig'
   DC0stack:
     Type: AWS::CloudFormation::Stack
     Properties:
@@ -436,6 +502,8 @@ Resources:
         DataCenterSize: !Ref 'DC0Size'
         InstanceType: !Ref 'DC0Instance'
         VolumeSize: !Ref 'DC0VolumeSize'
+        Search: !Ref 'DC0Search'
+        Analytics: !Ref 'DC0Analytics'
         VPC: !Ref 'VPCId'
         AvailabilityZones: !Join
           - ','
@@ -464,6 +532,8 @@ Resources:
         DataCenterSize: !Ref 'DC1Size'
         InstanceType: !Ref 'DC1Instance'
         VolumeSize: !Ref 'DC1VolumeSize'
+        Search: !Ref 'DC1Search'
+        Analytics: !Ref 'DC1Analytics'
         VPC: !Ref 'VPCId'
         AvailabilityZones: !Join
           - ','
