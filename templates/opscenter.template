@@ -154,9 +154,9 @@ Resources:
                 - - "#!/usr/bin/env bash -e \n"
                   - "cloud_type=\"aws\" \n"
                   - "cd ~ubuntu \n"
-                  - "release=\"7.3.0\" \n"
+                  - "release=\"7.4.0\" \n"
                   - "export OPSC_VERSION='6.7.4' \n"
-                  - "wget https://github.com/DSPN/install-datastax-ubuntu/archive/$release.tar.gz\
+                  - "wget https://github.com/MarkWolters/install-datastax-ubuntu/releases/tag/$release/$release.tar.gz\
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
                   - "cd install-datastax-ubuntu-$release/bin \n"
