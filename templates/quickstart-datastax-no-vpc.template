@@ -29,6 +29,7 @@ Metadata:
         Parameters:
           - OpsCenterInstanceType
           - OpsCPassword
+          - OpsCVersion
       - Label:
           default: 1st Datacenter & Node Setup
         Parameters:
@@ -72,6 +73,8 @@ Metadata:
         default: DataStax Academy Password
       OpsCPassword:
         default: OpsCenter Password
+      OpsCVersion:
+        default: OpsCenter Version
       DC0Size:
         default: 1st Data Center Size
       DC0Name:
@@ -168,6 +171,10 @@ Parameters:
   OpsCPassword:
     Type: String
     Description: Password for default DSE OpsCenter administrator.
+    NoEcho: true
+  OpsCVersion:
+    Type: String
+    Description: OpsCenter Version
     NoEcho: true
   DC0Size:
     Description: The number of nodes to create in the 1st DSE datacenter.
@@ -483,6 +490,7 @@ Resources:
         S3Bucket: !Ref 'S3Bucket'
         InstanceType: !Ref 'OpsCenterInstanceType'
         DSEConfig: !Ref 'DSEConfig'
+        OpsCVersion: !Ref 'OpsCVersion'
   DC0stack:
     Type: AWS::CloudFormation::Stack
     Properties:

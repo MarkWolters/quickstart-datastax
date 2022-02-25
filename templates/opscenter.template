@@ -43,6 +43,10 @@ Parameters:
     Type: String
     Description: Password for default OpsCenter user 'admin'
     NoEcho: true
+  OpsCVersion:
+    Type: String
+    Description: OpsCenter Version
+    NoEcho: true
   S3Bucket:
     Description: S3Bucket for public key passing
     Type: String
@@ -155,7 +159,9 @@ Resources:
                   - "cloud_type=\"aws\" \n"
                   - "cd ~ubuntu \n"
                   - "release=\"7.4.0\" \n"
-                  - "export OPSC_VERSION='6.7.4' \n"
+                  - "export OPSC_VERSION='"
+                  - !Ref 'OpsCVersion'
+                  - "' \n"
                   - "wget https://github.com/MarkWolters/install-datastax-ubuntu/releases/tag/$release/$release.tar.gz\
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
