@@ -214,7 +214,7 @@ Resources:
                   - "cat .ssh/lcm.pem.pub >> .ssh/authorized_keys \n"
                   - "release=\"7.4.0\" \n"
                   - "export OPSC_VERSION='6.7.4' \n"
-                  - "wget https://github.com/MarkWolters/install-datastax-ubuntu/releases/tag/$release/$release.tar.gz\ 
+                  - "wget https://github.com/MarkWolters/install-datastax-ubuntu/archive/refs/tags/$release.tar.gz\ 
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
                   - "cd install-datastax-ubuntu-$release/bin \n"
