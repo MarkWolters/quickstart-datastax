@@ -162,7 +162,7 @@ Resources:
                   - "export OPSC_VERSION='"
                   - !Ref 'OpsCVersion'
                   - "' \n"
-                  - "wget https://github.com/MarkWolters/install-datastax-ubuntu/releases/tag/$release/$release.tar.gz\
+                  - "wget https://github.com/MarkWolters/install-datastax-ubuntu/archive/refs/tags/$release.tar.gz\
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
                   - "cd install-datastax-ubuntu-$release/bin \n"
