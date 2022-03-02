@@ -195,7 +195,7 @@ Resources:
                 - ''
                 - - "#!/usr/bin/env bash -e \n"
                   - "cd ~ubuntu \n"
-                  - "release=\"7.3.0\" \n"
+                  - "release=\"7.4.0\" \n"
                   - "cd install-datastax-ubuntu-$release/bin \n"
                   - "privkey=$(readlink -f ~ubuntu/.ssh/lcm.pem) \n"
                   - "sleep 1m \n"
@@ -229,7 +229,7 @@ Resources:
                 - ''
                 - - "#!/usr/bin/env bash -e \n"
                   - "echo 'Post install/setup actions...' \n"
-                  - "release=\"7.3.0\" \n"
+                  - "release=\"7.4.0\" \n"
                   - /usr/local/bin/cfn-signal -e 0 -r "OpsCenter Setup Complete" "
                   - !Ref 'OpsCenterWaitHandle'
                   - "\" \n"
