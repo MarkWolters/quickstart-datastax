@@ -23,11 +23,13 @@ Metadata:
           - DSAcademyPW
           - DSEVersion
           - DBPassword
+          - DSEConfig
       - Label:
           default: OpsCenter Setup
         Parameters:
           - OpsCenterInstanceType
           - OpsCPassword
+          - OpsCVersion
       - Label:
           default: 1st Datacenter & Node Setup
         Parameters:
@@ -65,10 +67,14 @@ Metadata:
         default: DataStax Academy Username
       DBPassword:
         default: Database Password
+      DSEConfig:
+        default: blank
       DSAcademyPW:
         default: DataStax Academy Password
       OpsCPassword:
         default: OpsCenter Password
+      OpsCVersion:
+        default: OpsCenter Version
       DC0Size:
         default: 1st Data Center Size
       DC0Name:
@@ -158,9 +164,17 @@ Parameters:
     Type: String
     Description: Password for the default Cassandra user 'cassandra'.
     NoEcho: true
+  DSEConfig:
+    Type: String
+    Description: JSON String of values for cassandra.yaml
+    Default: ''
   OpsCPassword:
     Type: String
     Description: Password for default DSE OpsCenter administrator.
+    NoEcho: true
+  OpsCVersion:
+    Type: String
+    Description: OpsCenter Version
     NoEcho: true
   DC0Size:
     Description: The number of nodes to create in the 1st DSE datacenter.
@@ -472,9 +486,11 @@ Resources:
         DSAcademyPW: !Ref 'DSAcademyPW'
         DBPassword: !Ref 'DBPassword'
         OpsCPassword: !Ref 'OpsCPassword'
+        OpsCVersion: !Ref 'OpsCVersion'
         Profile: !Ref 'S3ProfileOpsC'
         S3Bucket: !Ref 'S3Bucket'
         InstanceType: !Ref 'OpsCenterInstanceType'
+        DSEConfig: !Ref 'DSEConfig'
   DC0stack:
     Type: AWS::CloudFormation::Stack
     Properties:

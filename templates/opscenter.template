@@ -46,6 +46,13 @@ Parameters:
   S3Bucket:
     Description: S3Bucket for public key passing
     Type: String
+  OpsCVersion:
+    Type: String
+    Description: OpsCenter Version
+    NoEcho: true
+  DSEConfig:
+    Type: String
+    Description: JSON String of values for cassandra.yaml
   InstanceType:
     Description: OpsCenter EC2 instance type
     Type: String
