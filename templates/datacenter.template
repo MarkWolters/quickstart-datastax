@@ -31,11 +31,6 @@ Parameters:
   S3Bucket:
     Description: S3Bucket for public key passing
     Type: String
-  OpsCVersion:
-    Type: String
-    Description: OpsCenter Version
-    NoEcho: true
-    Default: 6.8.19
   InstanceType:
     Description: Node EC2 instance type
     Type: String
@@ -218,9 +213,7 @@ Resources:
                   - "done \n"
                   - "cat .ssh/lcm.pem.pub >> .ssh/authorized_keys \n"
                   - "release=\"7.4.0\" \n"
-                  - "export OPSC_VERSION='"
-                  - !Ref 'OpsCVersion'
-                  - "' \n"
+                  - "export OPSC_VERSION='6.8.17' \n"
                   - "wget https://github.com/MarkWolters/install-datastax-ubuntu/archive/refs/tags/$release.tar.gz\ 
                     \ \n"
                   - "tar -xvf $release.tar.gz \n"
