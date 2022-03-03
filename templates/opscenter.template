@@ -219,9 +219,9 @@ Resources:
                 - - "#!/usr/bin/env bash -e \n"
                   - "echo 'Post install/setup actions...' \n"
                   - "release=\"7.4.0\" \n"
-                  - /usr/local/bin/cfn-signal -e 0 -r "OpsCenter Setup Complete" "
-                  - !Ref 'OpsCenterWaitHandle'
-                  - "\" \n"
+#                  - /usr/local/bin/cfn-signal -e 0 -r "OpsCenter Setup Complete" "
+#                  - !Ref 'OpsCenterWaitHandle'
+#                  - "\" \n"
                   - "cd ~ubuntu/install-datastax-ubuntu-$release/bin \n"
                   - "echo 'Triggering install...' \n"
                   - 'csize=$(( '
