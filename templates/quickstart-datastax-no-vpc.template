@@ -23,7 +23,6 @@ Metadata:
           - DSAcademyPW
           - DSEVersion
           - DBPassword
-          - DSEConfig
       - Label:
           default: OpsCenter Setup
         Parameters:
@@ -66,8 +65,6 @@ Metadata:
         default: DataStax Academy Username
       DBPassword:
         default: Database Password
-      DSEConfig:
-        default: blank
       DSAcademyPW:
         default: DataStax Academy Password
       OpsCPassword:
@@ -161,10 +158,6 @@ Parameters:
     Type: String
     Description: Password for the default Cassandra user 'cassandra'.
     NoEcho: true
-  DSEConfig:
-    Type: String
-    Description: JSON String of values for cassandra.yaml
-    Default: ''  
   OpsCPassword:
     Type: String
     Description: Password for default DSE OpsCenter administrator.
@@ -482,7 +475,6 @@ Resources:
         Profile: !Ref 'S3ProfileOpsC'
         S3Bucket: !Ref 'S3Bucket'
         InstanceType: !Ref 'OpsCenterInstanceType'
-        DSEConfig: !Ref 'DSEConfig'
   DC0stack:
     Type: AWS::CloudFormation::Stack
     Properties:

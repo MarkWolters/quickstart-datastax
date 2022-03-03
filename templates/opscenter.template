@@ -58,11 +58,6 @@ Parameters:
       - r5.xlarge
       - r5.2xlarge
     ConstraintDescription: Must be a valid EC2 instance type.
-  DSEConfig:
-    Type: String
-    Description: JSON String of values for cassandra.yaml
-Conditions:
-  PassConfig: !Not [ !Equals [ !Ref DSEConfig, "" ] ]
 Mappings:
   AWSAMIRegionMap:
     AMI:
