@@ -68,7 +68,7 @@ Metadata:
       DBPassword:
         default: Database Password
       DSEConfig:
-        default: blank
+        default: JSON format values for cassandra.yaml
       DSAcademyPW:
         default: DataStax Academy Password
       OpsCPassword:
@@ -84,9 +84,9 @@ Metadata:
       DC0VolumeSize:
         default: 1st Data Center Volume Size
       DC0Search:
-        default: False
+        default: Whether DC0 has Search enabled or not
       DC0Analytics:
-        default: False
+        default: Whether DC0 has Analytics enabled or not
       DC1Size:
         default: 2nd Data Center Size
       DC1Name:
@@ -96,9 +96,9 @@ Metadata:
       DC1VolumeSize:
         default: 2nd Data Center Volume Size
       DC1Search:
-        default: False
+        default: Whether DC1 has Search enabled or not
       DC1Analytics:
-        default: False
+        default: Whether DC1 has Analytics enabled or not
       ClusterName:
         default: Cluster Name
       QSS3BucketName:
@@ -175,7 +175,7 @@ Parameters:
   OpsCVersion:
     Type: String
     Description: OpsCenter Version
-    NoEcho: true
+    Default: 6.8.17
   DC0Size:
     Description: The number of nodes to create in the 1st DSE datacenter.
     Type: Number

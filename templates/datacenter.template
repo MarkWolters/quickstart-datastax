@@ -216,7 +216,7 @@ Resources:
                   - "sleep 5s \n"
                   - "done \n"
                   - "cat .ssh/lcm.pem.pub >> .ssh/authorized_keys \n"
-                  - "release=\"7.4.0\" \n"
+                  - "release=\"7.4.1\" \n"
                   - "export OPSC_VERSION='6.8.17' \n"
                   - "wget https://github.com/MarkWolters/install-datastax-ubuntu/archive/refs/tags/$release.tar.gz\ 
                     \ \n"
